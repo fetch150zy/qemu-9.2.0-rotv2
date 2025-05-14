@@ -26,7 +26,7 @@
  */
 
 #include "qemu/osdep.h"
-#include "hw/opentitan/ot_random_src.h"
+#include "hw/rot/ot_random_src.h"
 
 static const TypeInfo ot_random_src_info = {
     .name = TYPE_OT_RANDOM_SRC_IF,
