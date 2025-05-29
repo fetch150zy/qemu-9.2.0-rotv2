@@ -27,8 +27,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef HW_OPENTITAN_OT_RANDOM_SRC_H
-#define HW_OPENTITAN_OT_RANDOM_SRC_H
+#ifndef HW_ROTV2_OT_RANDOM_SRC_H
+#define HW_ROTV2_OT_RANDOM_SRC_H
 
 #include "qom/object.h"
 
@@ -68,4 +68,4 @@ struct OtRandomSrcIfClass {
                              bool *fips);
 };
 
-#endif /* HW_OPENTITAN_OT_RANDOM_SRC_H */
+#endif /* HW_ROTV2_OT_RANDOM_SRC_H */
