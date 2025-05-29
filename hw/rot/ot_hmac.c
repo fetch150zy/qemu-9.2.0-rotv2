@@ -659,10 +659,6 @@ static void ot_hmac_fifo_write(void *opaque, hwaddr addr, uint64_t value,
 {
     OtHMACState *s = OT_HMAC(opaque);
 
-    // uint32_t pc = ibex_get_current_pc();
-    // trace_ot_hmac_fifo_write(s->ot_id, (uint32_t)addr, (uint32_t)value, size,
-    //                          pc);
-
     if (!s->regs->cmd) {
         ot_hmac_report_error(s, R_ERR_CODE_PUSH_MSG_WHEN_DISALLOWED);
         return;
@@ -828,10 +824,6 @@ static uint64_t ot_hmac_regs_read(void *opaque, hwaddr addr, unsigned size)
         break;
     }
 
-    // uint32_t pc = ibex_get_current_pc();
-    // trace_ot_hmac_io_read_out(s->ot_id, (uint32_t)addr, REG_NAME(reg), val32,
-    //                           pc);
-
     return (uint64_t)val32;
 }
 
@@ -843,9 +835,6 @@ static void ot_hmac_regs_write(void *opaque, hwaddr addr, uint64_t value,
     uint32_t val32 = (uint32_t)value;
 
     hwaddr reg = R32_OFF(addr);
-
-    // uint32_t pc = ibex_get_current_pc();
-    // trace_ot_hmac_io_write(s->ot_id, (uint32_t)addr, REG_NAME(reg), val32, pc);
 
     OtHMACDigestSize digest_size;
     OtHMACKeyLength key_length;
