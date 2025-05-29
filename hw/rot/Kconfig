@@ -1,0 +1,80 @@
+# OpenTitan devices
+
+config OT_AES
+    select OT_PRNG
+    bool
+
+config OT_AST_EG
+    bool
+
+config OT_COMMON
+    bool
+
+config OT_CSRNG
+    bool
+
+config OT_EDN
+    bool
+
+config OT_ENTROPY_SRC
+    select OT_RANDOM_SRC
+    bool
+
+config OT_FLASH
+    bool
+
+config OT_HMAC
+    bool
+
+# config OT_IBEX_WRAPPER
+#     bool
+
+# config OT_IBEX_WRAPPER_EG
+#     select OT_IBEX_WRAPPER
+#     bool
+
+config OT_KEYMGR
+    bool
+
+config OT_KMAC
+    bool
+
+config OT_OTBN
+    select OT_BIGNUMBER
+    bool
+
+# config OT_OTP
+#     select OT_OTP_BE_IF
+
+# config OT_OTP_BE_IF
+#     bool
+
+# config OT_OTP_EG
+#     select OT_OTP
+#     bool
+
+# config OT_OTP_OT_BE
+#     select OT_OTP_BE_IF
+#     bool
+
+config OT_PCR
+    bool
+
+config OT_PRINCE
+    bool
+
+config OT_PRNG
+    bool
+
+config OT_RANDOM_SRC
+    bool
+
+config OT_ROM_CTRL
+    bool
+    select OT_COMMON
+    select OT_PRINCE
+
+config OT_SM4
+    bool
+
+source otbn/Kconfig
