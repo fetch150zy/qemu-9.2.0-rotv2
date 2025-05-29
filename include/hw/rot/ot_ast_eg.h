@@ -25,8 +25,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef HW_OPENTITAN_OT_AST_EG_H
-#define HW_OPENTITAN_OT_AST_EG_H
+#ifndef HW_ROTV2_OT_AST_EG_H
+#define HW_ROTV2_OT_AST_EG_H
 
 #include "qom/object.h"
 
@@ -37,4 +37,4 @@ OBJECT_DECLARE_SIMPLE_TYPE(OtASTEgState, OT_AST_EG)
 
 void ot_ast_eg_getrandom(void *buf, size_t len);
 
-#endif /* HW_OPENTITAN_OT_AST_EG_H */
+#endif /* HW_ROTV2_OT_AST_EG_H */
