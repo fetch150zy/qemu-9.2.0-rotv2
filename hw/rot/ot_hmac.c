@@ -844,8 +844,8 @@ static void ot_hmac_regs_write(void *opaque, hwaddr addr, uint64_t value,
 
     hwaddr reg = R32_OFF(addr);
 
-    uint32_t pc = ibex_get_current_pc();
-    trace_ot_hmac_io_write(s->ot_id, (uint32_t)addr, REG_NAME(reg), val32, pc);
+    // uint32_t pc = ibex_get_current_pc();
+    // trace_ot_hmac_io_write(s->ot_id, (uint32_t)addr, REG_NAME(reg), val32, pc);
 
     OtHMACDigestSize digest_size;
     OtHMACKeyLength key_length;
