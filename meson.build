@@ -1,6 +1,7 @@
-project('qemu', ['c'], meson_version: '>=1.5.0',
+project('qemu', ['c', 'rust'], meson_version: '>=1.5.0',
         default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=gnu++11', 'b_colorout=auto',
-                          'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'],
+                          'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true',
+                          'b_lundef=false'],
         version: files('VERSION'))
 
 add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true)
@@ -3572,6 +3573,7 @@ if have_system
     'hw/pci',
     'hw/pci-host',
     'hw/ppc',
+    'hw/rot',
     'hw/rtc',
     'hw/riscv',
     'hw/s390x',
