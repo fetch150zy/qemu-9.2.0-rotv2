@@ -57,6 +57,20 @@
 #include "qapi/qapi-visit-common.h"
 #include "hw/virtio/virtio-iommu.h"
 
+#include "hw/rot/ot_aes.h"
+#include "hw/rot/ot_csrng.h"
+#include "hw/rot/ot_edn.h"
+#include "hw/rot/ot_entropy_src.h"
+#include "hw/rot/ot_flash.h"
+#include "hw/rot/ot_hmac.h"
+// #include "hw/rot/ot_keymgr.h"
+#include "hw/rot/ot_kmac.h"
+#include "hw/rot/ot_otbn.h"
+#include "hw/rot/ot_pcr.h"
+#include "hw/rot/ot_rom_ctrl.h"
+#include "hw/rot/ot_sm4.h"
+
+
 /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
 static bool virt_use_kvm_aia(RISCVVirtState *s)
 {
@@ -69,26 +83,39 @@ static bool virt_aclint_allowed(void)
 }
 
 static const MemMapEntry virt_memmap[] = {
-    [VIRT_DEBUG] =        {        0x0,         0x100 },
-    [VIRT_MROM] =         {     0x1000,        0xf000 },
-    [VIRT_TEST] =         {   0x100000,        0x1000 },
-    [VIRT_RTC] =          {   0x101000,        0x1000 },
-    [VIRT_CLINT] =        {  0x2000000,       0x10000 },
-    [VIRT_ACLINT_SSWI] =  {  0x2F00000,        0x4000 },
-    [VIRT_PCIE_PIO] =     {  0x3000000,       0x10000 },
-    [VIRT_PLATFORM_BUS] = {  0x4000000,     0x2000000 },
-    [VIRT_PLIC] =         {  0xc000000, VIRT_PLIC_SIZE(VIRT_CPUS_MAX * 2) },
-    [VIRT_APLIC_M] =      {  0xc000000, APLIC_SIZE(VIRT_CPUS_MAX) },
-    [VIRT_APLIC_S] =      {  0xd000000, APLIC_SIZE(VIRT_CPUS_MAX) },
-    [VIRT_UART0] =        { 0x10000000,         0x100 },
-    [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
-    [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
-    [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
-    [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
-    [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
-    [VIRT_PCIE_ECAM] =    { 0x30000000,    0x10000000 },
-    [VIRT_PCIE_MMIO] =    { 0x40000000,    0x40000000 },
-    [VIRT_DRAM] =         { 0x80000000,           0x0 },
+    [VIRT_DEBUG] =           {        0x0,         0x100 },
+    [VIRT_MROM] =            {     0x1000,        0xf000 },
+    [VIRT_TEST] =            {   0x100000,        0x1000 },
+    [VIRT_RTC] =             {   0x101000,        0x1000 },
+    [VIRT_CLINT] =           {  0x2000000,       0x10000 },
+    [VIRT_ACLINT_SSWI] =     {  0x2F00000,        0x4000 },
+    [VIRT_PCIE_PIO] =        {  0x3000000,       0x10000 },
+    [VIRT_PLATFORM_BUS] =    {  0x4000000,     0x2000000 },
+    [VIRT_PLIC] =            {  0xc000000, VIRT_PLIC_SIZE(VIRT_CPUS_MAX * 2) },
+    [VIRT_APLIC_M] =         {  0xc000000, APLIC_SIZE(VIRT_CPUS_MAX) },
+    [VIRT_APLIC_S] =         {  0xd000000, APLIC_SIZE(VIRT_CPUS_MAX) },
+    [VIRT_UART0] =           { 0x10000000,         0x100 },
+    [VIRT_VIRTIO] =          { 0x10001000,        0x1000 },
+    [VIRT_FW_CFG] =          { 0x10100000,          0x18 },
+    [VIRT_OT_AES] =          { 0x10200000,         0x100 },
+    [VIRT_OT_CSRNG] =        { 0x10200100,         0x100 },
+    [VIRT_OT_EDN0] =         { 0x10200200,         0x100 },
+    [VIRT_OT_EDN1] =         { 0x10200300,         0x100 },
+    [VIRT_OT_ENTROPY_SRC] =  { 0x10200400,         0x100 },
+    [VIRT_OT_FLASH_CTRL] =   { 0x10200500,         0x300 },
+    [VIRT_OT_KEYMGR] =       { 0x10200800,         0x100 },
+    [VIRT_OT_ROM_CTRL] =     { 0x10200900,         0x100 },
+    [VIRT_OT_SM4] =          { 0x10200a00,         0x100 },
+    [VIRT_OT_HMAC] =         { 0x10201000,        0x2000 },
+    [VIRT_OT_KMAC] =         { 0x10203000,        0x1000 },
+    [VIRT_OT_PCR] =          { 0x10204000,        0x1000 },
+    [VIRT_OT_OTBN] =         { 0x10210000,       0x10000 },
+    [VIRT_FLASH] =           { 0x20000000,     0x4000000 },
+    [VIRT_IMSIC_M] =         { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+    [VIRT_IMSIC_S] =         { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+    [VIRT_PCIE_ECAM] =       { 0x30000000,    0x10000000 },
+    [VIRT_PCIE_MMIO] =       { 0x40000000,    0x40000000 },
+    [VIRT_DRAM] =            { 0x80000000,           0x0 },
 };
 
 /* PCIe high mmio is fixed for RV32 */
@@ -1652,6 +1679,69 @@ static void virt_machine_init(MachineState *machine)
 
     s->machine_done.notify = virt_machine_done;
     qemu_add_machine_init_done_notifier(&s->machine_done);
+
+    SysBusDevice *entropy_src = SYS_BUS_DEVICE(qdev_new(TYPE_OT_ENTROPY_SRC));
+    sysbus_realize_and_unref(entropy_src, &error_fatal);
+    sysbus_mmio_map(entropy_src, 0, memmap[VIRT_OT_ENTROPY_SRC].base);
+
+    SysBusDevice *csrng = SYS_BUS_DEVICE(qdev_new(TYPE_OT_CSRNG));
+    object_property_set_link(OBJECT(csrng), "random-src", OBJECT(entropy_src), &error_fatal);
+    sysbus_realize_and_unref(csrng, &error_fatal);
+    sysbus_mmio_map(csrng, 0, memmap[VIRT_OT_CSRNG].base);
+
+    SysBusDevice *edn0 = SYS_BUS_DEVICE(qdev_new(TYPE_OT_EDN));
+    object_property_set_link(OBJECT(edn0), "csrng", OBJECT(csrng), &error_fatal);
+    qdev_prop_set_uint32(DEVICE(edn0), "csrng-app", 0);
+    sysbus_realize_and_unref(edn0, &error_fatal);
+    sysbus_mmio_map(edn0, 0, memmap[VIRT_OT_EDN0].base);
+
+    SysBusDevice *edn1 = SYS_BUS_DEVICE(qdev_new(TYPE_OT_EDN));
+    object_property_set_link(OBJECT(edn1), "csrng", OBJECT(csrng), &error_fatal);
+    qdev_prop_set_uint32(DEVICE(edn1), "csrng-app", 1);
+    sysbus_realize_and_unref(edn1, &error_fatal);
+    sysbus_mmio_map(edn1, 0, memmap[VIRT_OT_EDN1].base);
+
+    SysBusDevice *pcr = SYS_BUS_DEVICE(qdev_new(TYPE_OT_PCR));
+    qdev_prop_set_string(DEVICE(pcr), "ot-id", "ot-pcr");
+    sysbus_realize_and_unref(pcr, &error_fatal);
+    sysbus_mmio_map(pcr, 0, memmap[VIRT_OT_PCR].base);
+    
+    SysBusDevice *sm4 = SYS_BUS_DEVICE(qdev_new(TYPE_OT_SM4));
+    qdev_prop_set_string(DEVICE(sm4), "ot-id", "ot-sm4");
+    sysbus_realize_and_unref(sm4, &error_fatal);
+    sysbus_mmio_map(sm4, 0, memmap[VIRT_OT_SM4].base);
+    
+    SysBusDevice *hmac = SYS_BUS_DEVICE(qdev_new(TYPE_OT_HMAC));
+    qdev_prop_set_string(DEVICE(hmac), "ot-id", "ot-hmac");
+    sysbus_realize_and_unref(hmac, &error_fatal);
+    sysbus_mmio_map(hmac, 0, memmap[VIRT_OT_HMAC].base);
+
+    SysBusDevice *kmac = SYS_BUS_DEVICE(qdev_new(TYPE_OT_KMAC));
+    object_property_set_link(OBJECT(kmac), "edn", OBJECT(edn0), &error_fatal);
+    qdev_prop_set_uint8(DEVICE(kmac), "edn-ep", 3);
+    qdev_prop_set_uint8(DEVICE(kmac), "num-app", 3);
+    sysbus_realize_and_unref(kmac, &error_fatal);
+    sysbus_mmio_map(kmac, 0, memmap[VIRT_OT_KMAC].base);
+
+    // SysBusDevice *keymgr = SYS_BUS_DEVICE(qdev_new(TYPE_OT_KEYMGR));
+    // object_property_set_link(OBJECT(keymgr), "kmac", OBJECT(kmac), &error_fatal);
+    // qdev_prop_set_uint32(DEVICE(keymgr), "size", 0x100u);
+    // sysbus_realize_and_unref(keymgr, &error_fatal);
+    // sysbus_mmio_map(keymgr, 0, memmap[VIRT_OT_KEYMGR].base);
+
+    SysBusDevice *aes = SYS_BUS_DEVICE(qdev_new(TYPE_OT_AES));
+    object_property_set_link(OBJECT(aes), "edn", OBJECT(edn0), &error_fatal);
+    qdev_prop_set_uint8(DEVICE(aes), "edn-ep", 5);
+    sysbus_realize_and_unref(aes, &error_fatal);
+    sysbus_mmio_map(aes, 0, memmap[VIRT_OT_AES].base);
+
+    SysBusDevice *otbn = SYS_BUS_DEVICE(qdev_new(TYPE_OT_OTBN));
+    object_property_set_link(OBJECT(otbn), "edn-u", OBJECT(edn0), &error_fatal);
+    object_property_set_link(OBJECT(otbn), "edn-r", OBJECT(edn1), &error_fatal);
+    qdev_prop_set_uint8(DEVICE(otbn), "edn-u-ep", 6);
+    qdev_prop_set_uint8(DEVICE(otbn), "edn-r-ep", 0);
+    sysbus_realize_and_unref(otbn, &error_fatal);
+    sysbus_mmio_map(otbn, 0, memmap[VIRT_OT_OTBN].base);
 }
 
 static void virt_machine_instance_init(Object *obj)

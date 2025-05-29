@@ -61,6 +61,19 @@ config RISCV_VIRT
     select ACPI
     select ACPI_PCI
 
+    # select OT_AES
+    # select OT_CSRNG
+    # select OT_EDN
+    # select OT_ENTROPY_SRC
+    # select OT_FLASH
+    # select OT_HMAC
+    # select OT_KEYMGR
+    # select OT_KMAC
+    # select OT_OTBN
+    # select OT_PCR
+    # select OT_ROM_CTRL
+    # select OT_SM4
+
 config SHAKTI_C
     bool
     default y
