@@ -25,8 +25,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef HW_OPENTITAN_OT_PRNG_H
-#define HW_OPENTITAN_OT_PRNG_H
+#ifndef HW_ROTV2_OT_PRNG_H
+#define HW_ROTV2_OT_PRNG_H
 
 #define TYPE_OT_PRNG "ot-prng"
 
@@ -40,4 +40,4 @@ void ot_prng_reseed(OtPrngState *prng, uint32_t seed);
 void ot_prng_reseed_array(OtPrngState *prng, const uint32_t *seed,
                           size_t length);
 
-#endif /* HW_OPENTITAN_OT_PRNG_H */
+#endif /* HW_ROTV2_OT_PRNG_H */
