@@ -1,0 +1,179 @@
+# OpenTitan EarlGrey Trace Events
+
+# ot_aes.c
+
+ot_aes_buffer(const char *mode, const char * msg, const char * hexbuf) "[%s] %s: %s"
+ot_aes_debug(const char *func, int line, const char *msg) "%s:%d %s"
+ot_aes_error(const char *func, int line, const char *err) "%s:%d %s"
+ot_aes_fill_entropy(uint32_t bits, bool fips) "0x%08x fips:%u"
+ot_aes_info(const char *func, int line, const char *errl) "%s:%d %s"
+ot_aes_init(const char *what) "%s"
+ot_aes_request_entropy(void) ""
+ot_aes_reseed(const char *reason) "%s"
+ot_aes_reseed_rate(unsigned rate) "%u"
+ot_aes_schedule(void) ""
+
+# ot_csrng.c
+
+ot_csrng_change_state(int line, const char *old, int nold, const char *new, int nnew) "@ %d [%s:%d] -> [%s:%d]"
+ot_csrng_command_scheduler(unsigned slot, const char *action) "#%u: %s"
+ot_csrng_complete_command(unsigned slot, const char *kind, const char *cmd, unsigned acmd, int res) "#%u (%s) acmd: %s(%u): %d"
+ot_csrng_connection(unsigned slot, bool newc) "#%u new:%u"
+ot_csrng_defer_generation(unsigned slot) "#%u instanciation not yet completed"
+ot_csrng_disconnection(unsigned slot, bool explicit) "#%u explicit:%u"
+ot_csrng_entropy_rejected(unsigned slot, const char *reason, int res) "#%u: %s (%d)"
+ot_csrng_error(const char *func, int line, const char *err) "%s:%d %s"
+ot_csrng_generate(unsigned slot, unsigned count) "#%u %u packets to generate"
+ot_csrng_hwapp_ready(unsigned slot, bool ready, unsigned rem) "#%u: %u rem %u"
+ot_csrng_info(const char *func, int line, const char *msg, uint32_t value) "%s:%d %s: 0x%08x"
+ot_csrng_instantiate(unsigned slot) "#%u"
+ot_csrng_invalid_state(const char *func, const char *state, int st) "%s [%s:%d]"
+// ot_csrng_irqs(uint32_t active, uint32_t mask, uint32_t eff) "act:0x%08x msk:0x%08x eff:0x%08x"
+ot_csrng_push_command(unsigned slot, const char *cmd, unsigned acmd, char code, unsigned len) "#%u: %s(%u) %clen: %u"
+ot_csrng_read_state_db(unsigned slot, unsigned pos, uint32_t val) "#%u [%u] = 0x%08x"
+ot_csrng_reject_command(unsigned slot, uint32_t command, int res) "#%u: cmd: 0x%08x res: %d"
+ot_csrng_request_entropy(unsigned slot) "#%u"
+ot_csrng_reset(void) ""
+ot_csrng_schedule(unsigned slot, const char *kind) "#%u: %s"
+ot_csrng_scheduling_command(unsigned slot) "#%u"
+ot_csrng_show_buffer(const char *func, int line, unsigned appid, const char *msg, const char *hexstr) "%s:%u #%u %s: %s"
+ot_csrng_show_command(const char *msg, unsigned slot, const char *cmd, unsigned acmd) "%s slot #%u, acmd: %s(%u)"
+ot_csrng_swapp_fill(unsigned count) "%u to go"
+ot_csrng_uninstantiate(unsigned slot, bool explicit) "#%u explicit:%u"
+
+# ot_edn.c
+
+ot_edn_auto_dispatch(unsigned appid, bool auto_, unsigned max_reqs_cnt) "a#%u auto:%u max_reqs_cnt:%u"
+ot_edn_clean_up(unsigned appid, bool discard) "a#%u discard:%u"
+ot_edn_change_state(unsigned appid, int line, const char *old, int nold, const char *new, int nnew) "a#%u @ %d [%s:%d] -> [%s:%d]"
+ot_edn_connect_endpoint(unsigned appid, unsigned epid) "a#%u:e#%u"
+ot_edn_csrng_ack(unsigned appid, const char *state, int level) "a#%u %s %d"
+ot_edn_ctrl_in_state(unsigned appid, const char *state, int nstate, bool en, bool boot, bool auto_, bool clr, bool dis) "a#%u [%s:%d] en:%u boot:%u auto:%u clr:%u dis:%u"
+ot_edn_delay_mode_change(unsigned appid, const char *state, uint32_t ctrl) "a#%u %s ctrl:0x%08x"
+ot_edn_dinfo(unsigned appid, const char *func, int line, const char *msg, uint32_t value) "a#%u %s:%d %s %u"
+ot_edn_enable(unsigned appid, const char *msg) "a#%u: %s"
+ot_edn_ep_fifo(unsigned appid, const char *msg, unsigned remwslot) "a#%u %s rem:%u"
+ot_edn_ep_request(unsigned appid, bool avail, const char *state, int st, bool refill, unsigned rem) "a#%u avail %u, [%s:%d], refill %u, rem %u"
+ot_edn_error(unsigned appid, const char *func, int line, const char *err) "a#%u %s:%d %s"
+ot_edn_fill_bits(unsigned appid, unsigned rem, bool packet_fips, bool fips) "a#%u rem %u, fips %u/%u"
+ot_edn_fill_endpoint(unsigned appid, unsigned epid, uint32_t bits, bool fips, size_t gcnt, size_t tcnt) "a#%u:e#%u bits 0x%08x fips %u count %lu/%lu"
+ot_edn_handle_ep_request(unsigned appid, unsigned epid) "a#%u:e#%u"
+// ot_edn_irqs(unsigned appid, uint32_t active, uint32_t mask, uint32_t eff) "a#%u act:0x%08x msk:0x%08x eff:0x%08x"
+ot_edn_push_csrng_command(unsigned appid,  const char *mode, uint32_t value) "a#%u (%s) cmd:0x%08x"
+ot_edn_push_csrng_error(unsigned appid, int res) "a#%u res:%d"
+ot_edn_request_entropy(unsigned appid, unsigned epid) "a#%u:e#%u"
+ot_edn_reset(unsigned appid, const char *phase) "a#%u %s"
+ot_edn_reset_replay_fifos(unsigned appid) "a#%u"
+ot_edn_schedule(unsigned appid, const char *cause) "a#%u %s"
+ot_edn_update_genbits_ready(unsigned appid, unsigned rem, unsigned fslot, bool accept) "a#%u rem packet %u, free slot %u, accept? %u"
+ot_edn_xinfo(unsigned appid, const char *func, int line, const char *msg, uint32_t value) "a#%u %s:%d %s 0x%08x"
+
+# ot_entropy_src.c
+
+ot_entropy_src_available(const char *state, int st) "entropy source is ready in [%s:%u]"
+ot_entropy_src_change_state(int line, const char *old, int nold, const char *new, int nnew) "@ %d [%s:%d] -> [%s:%d]"
+ot_entropy_src_consume_entropy(bool obs_fifo, bool bypass, bool hw_path, unsigned ncount) "obs_fifo %u, bypass %u, hw_path %u ncount %u"
+ot_entropy_src_error(const char *msg, const char *state, int st) "%s [%s:%u]"
+ot_entropy_src_fill_noise(unsigned count, unsigned infifo) "up to %u, input fifo %u"
+ot_entropy_src_get_random_fips(const char *state, bool en, bool es_route, bool es_type, bool rng_bit_en, bool cap, bool comp, bool fips) "st:%s en:%u rt:%u tp:%u !rb:%u cap:%u comp:%u => %u"
+ot_entropy_src_info(const char *msg) "%s"
+ot_entropy_src_init_ongoing(const char *state, int st, int ns) "ES still initializing in [%s:%u] %d ns to go"
+ot_entropy_src_no_entropy(unsigned count) "only %u words available"
+ot_entropy_src_obs_fifo(unsigned level, unsigned thold) "level %u, threshold %u"
+ot_entropy_src_push_bypass_entropy(unsigned slot) "final FIFO depth: %u"
+ot_entropy_src_reset(void) ""
+ot_entropy_src_show_buffer(const char *func, int line, const char *msg, const char *hexstr) "%s:%u %s: %s"
+ot_entropy_src_update_filler(bool iok, bool ook, bool pok, bool all) "in %u, out %u, proc %u -> %u"
+
+# ot_flash.c
+
+ot_flash_error(const char *func, int line, const char *err) "%s:%d %s"
+ot_flash_info(const char *func, int line, const char *msg, uint32_t value) "%s:%d %s: 0x%08x"
+ot_flash_info_part(unsigned op_addr, unsigned count, unsigned remaining, unsigned bank, unsigned infosel, unsigned addr) "op_addr 0x%06x count %u remaining %u bank %u infosel %u addr 0x%06x"
+ot_flash_data_part(unsigned op_addr, unsigned count, unsigned remaining, unsigned bank, unsigned addr) "op_addr 0x%06x count %u remaining %u bank %u addr 0x%06x"
+// ot_flash_irqs(uint32_t active, uint32_t mask, uint32_t eff) "act:0x%08x msk:0x%08x eff:0x%08x"
+ot_flash_op_complete(const char *op, bool success) "%s: %u"
+ot_flash_op_execute(const char *op) "%s"
+ot_flash_op_start(const char *op) "%s"
+ot_flash_set_error(const char *op, uint32_t err_code, uint32_t err_addr) "%s: err=%08x at addr=0x%06x"
+ot_flash_update_rd_watermark(unsigned val, unsigned watermark) "%u >= %u"
+ot_flash_update_prog_watermark(unsigned val, unsigned watermark) "%u <= %u"
+ot_flash_reset_fifo(const char *name) "%s"
+ot_flash_op_prog(unsigned op_addr, unsigned count, unsigned remaining, bool failed, bool fifo_empty) "op_addr 0x%06x count %u remaining %u failed %u fifo_empty %u"
+ot_flash_prog_word(bool info_part, unsigned word_addr, uint32_t word) "info_part %u word_addr %u word %u"
+ot_flash_erase(bool info_part, unsigned word_addr, unsigned num_bytes) "info_part %u word_addr %u num_bytes %u"
+
+# ot_hmac.c
+
+ot_hmac_debug(const char *id, const char *msg) "%s: %s"
+// ot_hmac_irqs(const char *id, uint32_t active, uint32_t mask, uint32_t eff) "%s: act:0x%01x msk:0x%01x eff:0x%01x"
+
+# ot_kmac.c
+
+ot_kmac_app_finished(unsigned app_idx) "#%u"
+ot_kmac_app_start(unsigned app_idx) "#%u"
+ot_kmac_change_state_app(unsigned app_idx, int line, const char *old, int nold, const char *new, int nnew) "#%u @ %d [%s:%d] -> [%s:%d]"
+ot_kmac_change_state_sw(int line, const char *old, int nold, const char *new, int nnew) "@ %d [%s:%d] -> [%s:%d]"
+ot_kmac_process_sw_command(int cmd, const char *cmd_str) "cmd=0x%02x (%s)"
+ot_kmac_report_error(int code, const char *code_str, uint32_t info) "code=0x%02x (%s) info=0x%06x"
+
+# ot_otbn.c
+
+ot_otbn_error(const char *msg) "%s"
+// ot_otbn_irq(uint32_t active, uint32_t mask, bool level) "act:0x%08x msk:0x%08x lvl:%u"
+ot_otbn_mem_read(char mem, uint32_t addr, uint32_t value) "%cmem addr=0x%04x, val=0x%08x"
+ot_otbn_mem_write(char mem, uint32_t addr, uint32_t value, const char *outcome) "%cmem addr=0x%04x, val=0x%08x%s"
+ot_otbn_post_execute(uint32_t errbits, uint32_t insncount) "errbits=0x%08x, insncount=%u"
+ot_otbn_proxy_completion_bh(unsigned cmd) "aftercmd=0x%02x"
+ot_otbn_proxy_entropy_request(unsigned rnd) "%u"
+ot_otbn_proxy_push_entropy(const char *kind, bool fips) "%s: fips %u"
+ot_otbn_request_entropy(unsigned ep) "ep:%u"
+
+# ot_otp.c
+
+// ot_otp_access_error_on(const char * id, int part, uint32_t addr, const char *msg) "%s: part #%d, addr 0x%04x: %s"
+// ot_otp_addr_to_part(const char * id, uint32_t addr, const char *part, unsigned pix) "%s: addr %u partition %s (#%u)"
+// ot_otp_configure_missing(const char *id, const char *cfg) "%s: %s"
+// ot_otp_dai_change_state(const char * id, int line, const char *old, int nold, const char *new, int nnew) "%s: @ %d [%s:%d] -> [%s:%d]"
+// ot_otp_dai_new_digest_ecc(const char * id, const char *part, unsigned pix, uint64_t digest, uint32_t eccc) "%s: partition %s (#%u) digest 0x%016" PRIx64 ", ecc 0x%08x"
+// ot_otp_dai_new_dword_ecc(const char * id, const char *part, unsigned pix, uint64_t data, uint32_t eccc) "%s: partition %s (#%u) dword 0x%016" PRIx64 ", ecc 0x%08x"
+// ot_otp_dai_new_word_ecc(const char * id, const char *part, unsigned pix, uint32_t data, uint16_t eccc) "%s: partition %s (#%u) dword 0x%08x, ecc 0x%04hx"
+// ot_otp_dai_read(const char * id, const char* part, unsigned pix, uint32_t hi, uint32_t lo) "%s: DAI read %s (#%u): 0x%08x%08x"
+// ot_otp_ecc_init_error(const char * id, const char* part, unsigned pix, unsigned off, uint32_t word, uint16_t ecc) "%s: %s (#%u): @ %u 0x%08x, ecc 0x%04hx"
+// ot_otp_ecc_mismatch(const char * id, unsigned address, uint32_t secc, uint32_t lecc) "%s: @ %04x ECC OTP: 0x%08x local: 0x%08x"
+// ot_otp_ecc_parity_error(const char * id, uint32_t d_i, uint32_t ecc) "%s: 0x%04x, ECC 0x%02x"
+// ot_otp_ecc_recovered_error(const char * id, uint32_t d_i, uint32_t d_o) "%s: 0x%04x -> 0x%04x"
+// ot_otp_ecc_unrecoverable_error(const char * id, uint32_t d_i) "%s: 0x%04x"
+// ot_otp_initialize(const char * id) "%s"
+// ot_otp_integrity_report(const char * id, const char* part, unsigned pix, const char *msg) "%s: partition %s (#%u) %s"
+// ot_otp_io_reg_read_out(const char * id, uint32_t addr, const char * regname, uint32_t val, uint32_t pc) "%s: addr=0x%02x (%s), val=0x%x, pc=0x%x"
+// ot_otp_io_reg_write(const char * id, uint32_t addr, const char * regname, uint32_t val, uint32_t pc) "%s: addr=0x%02x (%s), val=0x%x, pc=0x%x"
+// ot_otp_io_swcfg_read_out(const char * id, uint32_t addr, const char * regname, uint32_t val, uint32_t pc) "%s: addr=0x%02x (%s), val=0x%x, pc=0x%x"
+// ot_otp_keygen_entropy(const char * id, unsigned slot, bool resched) "%s: %u slots, resched: %u"
+// ot_otp_lc_broadcast(const char * id, unsigned sig, bool level) "%s: bcast %u, level %u"
+// ot_otp_lci_change_state(const char * id, int line, const char *old, int nold, const char *new, int nnew) "%s: @ %d [%s:%d] -> [%s:%d]"
+// ot_otp_lci_write(const char * id, unsigned pos, uint16_t cval, uint16_t nval) "%s: @ %u 0x%04x -> 0x%04x"
+// ot_otp_lci_write_ecc(const char * id, unsigned pos, uint8_t cval, uint8_t nval) "%s: @ %u 0x%02x -> 0x%02x"
+// ot_otp_load_backend(const char * id, unsigned ver, const char *mode, unsigned eccbits, unsigned eccgran) "%s: loading OTP image v%u in %s mode w/ ECC %u bits, granule %u"
+// ot_otp_load_token(const char * id, const char *token, unsigned tkx, uint64_t hi, uint64_t lo, const char *valid) "%s: %s (%u) 0x%016" PRIx64 "%016" PRIx64 ": %svalid"
+// ot_otp_mismatch_digest(const char * id, const char* part, unsigned pix, uint64_t sdig, uint64_t ldig) "%s: mismatch digest on %s (#%u), computed 0x%" PRIx64 " stored 0x%" PRIx64
+// ot_otp_pwr_otp_req(const char * id, const char *where) "%s: %s"
+// ot_otp_reset(const char * id) "%s"
+// ot_otp_set_error(const char * id, const char *part, unsigned pix, const char* err, unsigned eix) "%s: %s (#%u): %s (%u)"
+// ot_otp_skip_digest(const char * id, const char* part, unsigned pix) "%s: skipping empty digest on %s (#%u)"
+
+# ot_otp_ot_be.c
+
+// ot_otp_ot_be_read_out(uint32_t addr, const char * regname, uint32_t val, uint32_t pc) "addr=0x%02x (%s), val=0x%x, pc=0x%x"
+// ot_otp_ot_be_write(uint32_t addr, const char * regname, uint32_t val, uint32_t pc) "addr=0x%02x (%s), val=0x%x, pc=0x%x"
+
+# ot_rom_ctrl.c
+
+ot_rom_ctrl_digest_mode(const char *id, const char *mode) "%s: %s digest mode"
+ot_rom_ctrl_parity_error(const char * id, uint32_t d_i, unsigned ecc) "%s: 0x%08x, ECC 0x%02x"
+ot_rom_ctrl_recovered_error(const char * id, uint32_t d_i, uint32_t d_o) "%s: 0x%08x -> 0x%08x"
+ot_rom_ctrl_unrecoverable_error(const char * id, uint32_t d_i) "%s: 0x%08x"
+ot_rom_ctrl_image_identify(const char *id, const char *fname, const char *imgtype) "%s: file '%s' identified as %s"
+ot_rom_ctrl_load_rom_no_image(const char *id) "%s: ROM image not defined"
+ot_rom_ctrl_notify(const char *id, bool rom_good) "%s: ROM good: %u"
+ot_rom_ctrl_reset(const char *id, const char *phase) "%s: %s"
