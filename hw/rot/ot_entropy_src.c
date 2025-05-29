@@ -35,7 +35,7 @@
 #include "qemu/log.h"
 #include "qemu/timer.h"
 #include "qemu/typedefs.h"
-#include "hw/rot/ot_ast_eg.h"
+#include "qemu/guest-random.h"
 #include "hw/rot/ot_common.h"
 #include "hw/rot/ot_entropy_src.h"
 #include "hw/rot/ot_fifo32.h"
@@ -315,6 +315,8 @@ static const char *REG_NAMES[REGS_COUNT] = {
 };
 #undef REG_NAME_ENTRY
 
+#define OT_AST_EG_RANDOM_4BIT_RATE 50000u /* 50 kHz */
+
 /**
  * Use a 128-bit incoming packet size (HW uses 4-bit packet) in order to limit
  * feed rate to ~0.7 ms max. 128-bit packet can be divided down to 32-bit
@@ -388,7 +390,6 @@ struct OtEntropySrcState {
     unsigned packet_count; /* count of output packets since enabled */
     bool obs_fifo_en; /* observe FIFO accept incoming data */
 
-    OtASTEgState *ast;
     // OtOTPState *otp_ctrl;
 };
 
@@ -952,7 +953,7 @@ static bool ot_entropy_src_fill_noise(OtEntropySrcState *s)
 
     uint32_t buffer[OT_ENTROPY_SRC_FILL_WORD_COUNT];
     /* synchronous read */
-    ot_ast_eg_getrandom(buffer, sizeof(buffer));
+    qemu_guest_getrandom_nofail(buffer, sizeof(buffer));
 
     /* push the whole entropy buffer into the input FIFO */
     unsigned pos = 0;
@@ -1462,8 +1463,6 @@ static void ot_entropy_src_regs_write(void *opaque, hwaddr addr, uint64_t val64,
 };
 
 static Property ot_entropy_src_properties[] = {
-    DEFINE_PROP_LINK("ast", OtEntropySrcState, ast, TYPE_OT_AST_EG,
-                     OtASTEgState *),
     // DEFINE_PROP_LINK("otp_ctrl", OtEntropySrcState, otp_ctrl, TYPE_OT_OTP,
     //                  OtOTPState *),
     DEFINE_PROP_END_OF_LIST(),
@@ -1483,7 +1482,6 @@ static void ot_entropy_src_reset(DeviceState *dev)
 
     trace_ot_entropy_src_reset();
 
-    g_assert(s->ast);
     // g_assert(s->otp_ctrl);
 
     timer_del(s->scheduler);
