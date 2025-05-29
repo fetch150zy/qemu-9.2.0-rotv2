@@ -7,10 +7,10 @@
  *
  */
 
-#ifndef HW_OPENTITAN_OT_PRINCE_H
-#define HW_OPENTITAN_OT_PRINCE_H
+#ifndef HW_ROTV2_OT_PRINCE_H
+#define HW_ROTV2_OT_PRINCE_H
 
 uint64_t ot_prince_run(uint64_t data, uint64_t khi, uint64_t klo,
                        unsigned num_rounds_half);
 
-#endif /* HW_OPENTITAN_OT_PRINCE_H */
+#endif /* HW_ROTV2_OT_PRINCE_H */
