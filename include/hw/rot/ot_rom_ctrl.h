@@ -1,10 +1,9 @@
 /*
- * QEMU OpenTitan ROM image
+ * QEMU OpenTitan ROM controller
  *
- * Copyright (c) 2023 Rivos, Inc.
+ * Copyright (c) 2023-2024 Rivos, Inc.
  *
  * Author(s):
- *  Emmanuel Blot <eblot@rivosinc.com>
  *  Loïc Lefort <loic@rivosinc.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,28 +25,15 @@
  * THE SOFTWARE.
  */
 
-#ifndef HW_ROTV2_OT_ROM_CTRL_IMG
-#define HW_ROTV2_OT_ROM_CTRL_IMG
+#ifndef HW_ROTV2_OT_ROM_CTRL
+#define HW_ROTV2_OT_ROM_CTRL
 
 #include "qom/object.h"
 
-#define TYPE_OT_ROM_IMG "ot-rom_img"
-OBJECT_DECLARE_SIMPLE_TYPE(OtRomImg, OT_ROM_IMG)
+#define TYPE_OT_ROM_CTRL "ot-rom_ctrl"
+OBJECT_DECLARE_TYPE(OtRomCtrlState, OtRomCtrlClass, OT_ROM_CTRL)
 
-typedef enum {
-    OT_ROM_IMG_FORMAT_NONE, /* invalid image */
-    OT_ROM_IMG_FORMAT_VMEM_PLAIN, /* 32-bit VMEM, no scrambling, no ECC */
-    OT_ROM_IMG_FORMAT_VMEM_SCRAMBLED_ECC, /* 39-bit VMEM, scrambled, ECC */
-    OT_ROM_IMG_FORMAT_HEX_SCRAMBLED_ECC, /* 39-bit raw HEX, scrambled, ECC */
-    OT_ROM_IMG_FORMAT_ELF, /* ELF32 file, no scrambling, no ECC */
-    OT_ROM_IMG_FORMAT_BINARY, /* RAW binary file */
-} OtRomImgFormat;
+#define OT_ROM_CTRL_GOOD TYPE_OT_ROM_CTRL "-good"
+#define OT_ROM_CTRL_DONE TYPE_OT_ROM_CTRL "-done"
 
-struct OtRomImg {
-    Object parent_obj;
-    char *filename; /* full file path to the image file */
-    unsigned raw_size; /* size in bytes of the image file */
-    OtRomImgFormat format; /* guessed format of the image file */
-};
-
-#endif /* HW_ROTV2_OT_ROM_CTRL_IMG */
+#endif /* HW_ROTV2_OT_ROM_CTRL */
