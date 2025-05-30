@@ -23,4 +23,5 @@ GTAGS
 !subprojects/packagefiles/bitflags/*.patch
 !subprojects/packagefiles/paste/*.patch
 !subprojects/packagefiles/ethnum-rs/*.patch
+!subprojects/packagefiles/oorandom/*.patch
 *.gcov
