@@ -20,4 +20,5 @@ GTAGS
 *.swp
 *.patch
 !subprojects/packagefiles/libtomcrypt/*.patch
+!subprojects/packagefiles/bitflags/*.patch
 *.gcov
