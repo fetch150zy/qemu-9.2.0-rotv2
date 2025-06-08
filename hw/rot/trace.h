@@ -1,1 +1,1 @@
-#include "trace/trace-hw_opentitan.h"
+#include "trace/trace-hw_rot.h"

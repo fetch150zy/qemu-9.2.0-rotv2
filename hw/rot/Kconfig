@@ -4,9 +4,6 @@ config OT_AES
     select OT_PRNG
     bool
 
-config OT_AST_EG
-    bool
-
 config OT_COMMON
     bool
 

@@ -33,7 +33,7 @@
 #include "qemu/module.h"
 #include "hw/registerfields.h"
 
-#include "hw/rotv2/rot_sm4.h"
+#include "hw/rot/ot_sm4.h"
 
 
 /* clang-format off */
@@ -640,7 +640,7 @@ static void rot_sm4_realize(DeviceState *dev, Error **errp)
 }
 
 static Property rot_sm4_properties[] = {
-    DEFINE_PROP_STRING("rot-id", RoTSM4State, rot_id),
+    DEFINE_PROP_STRING("ot-id", RoTSM4State, rot_id),
     DEFINE_PROP_END_OF_LIST(),
 };
 

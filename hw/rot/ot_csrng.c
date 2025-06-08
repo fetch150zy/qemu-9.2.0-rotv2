@@ -42,6 +42,7 @@
 #include "hw/qdev-properties.h"
 #include "hw/registerfields.h"
 #include "hw/sysbus.h"
+#include "hw/irq.h"
 #include "tomcrypt.h"
 #include "trace.h"
 
@@ -1897,7 +1898,7 @@ static void ot_csrng_regs_write(void *opaque, hwaddr addr, uint64_t val64,
 };
 
 static Property ot_csrng_properties[] = {
-    DEFINE_PROP_LINK("random_src", OtCSRNGState, random_src, TYPE_DEVICE,
+    DEFINE_PROP_LINK("random-src", OtCSRNGState, random_src, TYPE_DEVICE,
                      DeviceState *),
     // DEFINE_PROP_LINK("otp_ctrl", OtCSRNGState, otp_ctrl, TYPE_OT_OTP,
     //                  OtOTPState *),

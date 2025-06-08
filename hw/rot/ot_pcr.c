@@ -35,7 +35,7 @@
 #include "qemu/module.h"
 #include "hw/registerfields.h"
 
-#include "hw/rotv2/rot_pcr.h"
+#include "hw/rot/ot_pcr.h"
 
 #include "tomcrypt.h"
 
@@ -1301,7 +1301,7 @@ static void rot_pcr_realize(DeviceState *dev, Error **errp)
 }
 
 static Property rot_pcr_properties[] = {
-    DEFINE_PROP_STRING("rot-id", RoTPCRState, rot_id),
+    DEFINE_PROP_STRING("ot-id", RoTPCRState, rot_id),
     DEFINE_PROP_END_OF_LIST(),
 };
 

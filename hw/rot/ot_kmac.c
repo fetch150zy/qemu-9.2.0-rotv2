@@ -38,6 +38,7 @@
 #include "qemu/main-loop.h"
 #include "qemu/timer.h"
 #include "qapi/error.h"
+#include "hw/sysbus.h"
 #include "hw/rot/ot_common.h"
 #include "hw/rot/ot_edn.h"
 #include "hw/rot/ot_kmac.h"

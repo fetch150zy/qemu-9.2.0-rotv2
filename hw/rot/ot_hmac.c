@@ -32,6 +32,7 @@
 #include "qemu/fifo8.h"
 #include "qemu/log.h"
 #include "qemu/module.h"
+#include "hw/sysbus.h"
 #include "hw/rot/ot_common.h"
 #include "hw/rot/ot_hmac.h"
 #include "hw/qdev-properties.h"
@@ -1149,7 +1150,7 @@ static void ot_hmac_regs_write(void *opaque, hwaddr addr, uint64_t value,
 }
 
 static Property ot_hmac_properties[] = {
-    DEFINE_PROP_STRING("ot_id", OtHMACState, ot_id),
+    DEFINE_PROP_STRING("ot-id", OtHMACState, ot_id),
     DEFINE_PROP_END_OF_LIST(),
 };
 

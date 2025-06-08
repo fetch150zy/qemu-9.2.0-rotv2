@@ -1701,12 +1701,12 @@ static void virt_machine_init(MachineState *machine)
     sysbus_realize_and_unref(edn1, &error_fatal);
     sysbus_mmio_map(edn1, 0, memmap[VIRT_OT_EDN1].base);
 
-    SysBusDevice *pcr = SYS_BUS_DEVICE(qdev_new(TYPE_OT_PCR));
+    SysBusDevice *pcr = SYS_BUS_DEVICE(qdev_new(TYPE_ROT_PCR));
     qdev_prop_set_string(DEVICE(pcr), "ot-id", "ot-pcr");
     sysbus_realize_and_unref(pcr, &error_fatal);
     sysbus_mmio_map(pcr, 0, memmap[VIRT_OT_PCR].base);
     
-    SysBusDevice *sm4 = SYS_BUS_DEVICE(qdev_new(TYPE_OT_SM4));
+    SysBusDevice *sm4 = SYS_BUS_DEVICE(qdev_new(TYPE_ROT_SM4));
     qdev_prop_set_string(DEVICE(sm4), "ot-id", "ot-sm4");
     sysbus_realize_and_unref(sm4, &error_fatal);
     sysbus_mmio_map(sm4, 0, memmap[VIRT_OT_SM4].base);

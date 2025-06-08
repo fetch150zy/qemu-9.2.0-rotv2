@@ -5,7 +5,6 @@ libtomcrypt_dep = subproject('libtomcrypt').get_variable('libtomcrypt_dep')
 # OpenTitan devices
 
 system_ss.add(when: 'CONFIG_OT_AES', if_true: [files('ot_aes.c'), libtomcrypt_dep])
-system_ss.add(when: 'CONFIG_OT_AST_EG', if_true: files('ot_ast_eg.c'))
 system_ss.add(when: 'CONFIG_OT_COMMON', if_true: files('ot_common.c'))
 system_ss.add(when: 'CONFIG_OT_CSRNG', if_true: [files('ot_csrng.c'), libtomcrypt_dep])
 system_ss.add(when: 'CONFIG_OT_EDN', if_true: files('ot_edn.c'))

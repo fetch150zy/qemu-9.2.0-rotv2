@@ -531,14 +531,14 @@ static bool ot_rom_ctrl_load_elf(OtRomCtrlState *s, const OtRomImg *ri)
     hwaddr maxaddr;
     ot_rom_ctrl_get_mem_bounds(s, &minaddr, &maxaddr);
     uint64_t loaddr;
-    if (load_elf_ram_sym_nosz(ri->filename, NULL, NULL, NULL, NULL, &loaddr,
-                              NULL, NULL, 0, EM_RISCV, 1, 0, as, false,
-                              &ot_rom_ctrl_rust_demangle_fn, true) <= 0) {
-        error_setg(&error_fatal,
-                   "ot_rom_ctrl: %s: ROM image '%s', ELF loading failed",
-                   s->ot_id, ri->filename);
-        return false;
-    }
+    // if (load_elf_ram_sym_nosz(ri->filename, NULL, NULL, NULL, NULL, &loaddr,
+    //                           NULL, NULL, 0, EM_RISCV, 1, 0, as, false,
+    //                           &ot_rom_ctrl_rust_demangle_fn, true) <= 0) {
+    //     error_setg(&error_fatal,
+    //                "ot_rom_ctrl: %s: ROM image '%s', ELF loading failed",
+    //                s->ot_id, ri->filename);
+    //     return false;
+    // }
     if ((loaddr < minaddr) || (loaddr > maxaddr)) {
         /* cannot test upper load address as QEMU loader returns VMA, not LMA */
         error_setg(&error_fatal, "ot_rom_ctrl: %s: ELF cannot fit into ROM",

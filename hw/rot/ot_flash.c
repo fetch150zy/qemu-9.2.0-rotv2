@@ -2434,9 +2434,9 @@ static void ot_flash_load(OtFlashState *s, Error **errp)
                 size_t elflen = strnlen(elfname, ELFNAME_SIZE);
                 if (elflen > 0 && elflen < ELFNAME_SIZE) {
                     if (!access(elfname, F_OK)) {
-                        if (load_elf_sym(elfname, 0, EM_RISCV, 1)) {
-                            xtrace_ot_flash_error("Cannot load ELF symbols");
-                        }
+                        // if (load_elf_sym(elfname, 0, EM_RISCV, 1)) {
+                        //     xtrace_ot_flash_error("Cannot load ELF symbols");
+                        // }
                     }
                 }
                 elfname += ELFNAME_SIZE;
