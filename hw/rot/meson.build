@@ -25,6 +25,7 @@ system_ss.add(when: 'CONFIG_OT_PRINCE', if_true: files('ot_prince.c'))
 system_ss.add(when: 'CONFIG_OT_PRNG', if_true: files('ot_prng.c'))
 system_ss.add(when: 'CONFIG_OT_RANDOM_SRC', if_true: files('ot_random_src.c'))
 system_ss.add(when: 'CONFIG_OT_ROM_CTRL', if_true: files('ot_rom_ctrl.c', 'ot_rom_ctrl_img.c'))
+system_ss.add(when: 'CONFIG_OT_SM3', if_true: files('ot_sm3.c'))
 system_ss.add(when: 'CONFIG_OT_SM4', if_true: files('ot_sm4.c'))
 
 subdir('otbn')

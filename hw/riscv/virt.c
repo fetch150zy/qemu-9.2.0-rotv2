@@ -68,6 +68,7 @@
 #include "hw/rot/ot_otbn.h"
 #include "hw/rot/ot_pcr.h"
 #include "hw/rot/ot_rom_ctrl.h"
+#include "hw/rot/ot_sm3.h"
 #include "hw/rot/ot_sm4.h"
 
 
@@ -106,9 +107,10 @@ static const MemMapEntry virt_memmap[] = {
     [VIRT_OT_KEYMGR] =       { 0x10200800,         0x100 },
     [VIRT_OT_ROM_CTRL] =     { 0x10200900,         0x100 },
     [VIRT_OT_SM4] =          { 0x10200a00,         0x100 },
+    [VIRT_OT_SM3] =          { 0x10200b00,         0x100 },
+    [VIRT_OT_PCR] =          { 0x10200c00,         0x100 },
     [VIRT_OT_HMAC] =         { 0x10201000,        0x2000 },
     [VIRT_OT_KMAC] =         { 0x10203000,        0x1000 },
-    [VIRT_OT_PCR] =          { 0x10204000,        0x1000 },
     [VIRT_OT_OTBN] =         { 0x10210000,       0x10000 },
     [VIRT_FLASH] =           { 0x20000000,     0x4000000 },
     [VIRT_IMSIC_M] =         { 0x24000000, VIRT_IMSIC_MAX_SIZE },
@@ -1710,6 +1712,11 @@ static void virt_machine_init(MachineState *machine)
     qdev_prop_set_string(DEVICE(sm4), "ot-id", "ot-sm4");
     sysbus_realize_and_unref(sm4, &error_fatal);
     sysbus_mmio_map(sm4, 0, memmap[VIRT_OT_SM4].base);
+
+    SysBusDevice *sm3 = SYS_BUS_DEVICE(qdev_new(TYPE_ROT_SM3));
+    qdev_prop_set_string(DEVICE(sm3), "ot-id", "ot-sm3");
+    sysbus_realize_and_unref(sm3, &error_fatal);
+    sysbus_mmio_map(sm3, 0, memmap[VIRT_OT_SM3].base);
     
     SysBusDevice *hmac = SYS_BUS_DEVICE(qdev_new(TYPE_OT_HMAC));
     qdev_prop_set_string(DEVICE(hmac), "ot-id", "ot-hmac");

@@ -1,5 +1,5 @@
 /*
- * QEMU Root of Trust v2 PCR device
+ * QEMU Root of Trust v2 SM3 device
  *
  * Copyright (c) 2024-2025 ZGC Lab & CAS, ICT.
  *
@@ -25,14 +25,14 @@
  * THE SOFTWARE.
  */
 
-#ifndef HW_ROTV2_ROT_PCR_H
-#define HW_ROTV2_ROT_PCR_H
+#ifndef HW_ROTV2_ROT_SM3_H
+#define HW_ROTV2_ROT_SM3_H
 
 #include "qom/object.h"
 
-#define TYPE_ROT_PCR "rot-pcr"
-OBJECT_DECLARE_SIMPLE_TYPE(RoTPCRState, ROT_PCR)
+#define TYPE_ROT_SM3 "rot-sm3"
+OBJECT_DECLARE_SIMPLE_TYPE(RoTSM3State, ROT_SM3)
 
-#define ROT_PCR_MMIO_SIZE 0x100u
+#define ROT_SM3_MMIO_SIZE 0x100u
 
-#endif /* HW_ROTV2_ROT_PCR_H */
+#endif /* HW_ROTV2_ROT_SM3_H */

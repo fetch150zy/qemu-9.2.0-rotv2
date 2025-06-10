@@ -67,6 +67,7 @@ config RISCV_VIRT
     select OT_AES
     select OT_KMAC
     select OT_OTBN
+    select OT_SM3
     select OT_SM4
     select OT_PCR
     select OT_FLASH

@@ -98,6 +98,7 @@ enum {
     VIRT_OT_PCR,
     VIRT_OT_ROM_CTRL,
     VIRT_OT_SM4,
+    VIRT_OT_SM3,
 };
 
 enum {
